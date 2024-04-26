@@ -22,7 +22,7 @@ function pickRandomNames(sizeOf) {
       active: true,
       show: false,
     }
-    console.log(`i=${i}, i+1=${i+sizeOf}`)
+    console.log(`i=${i}, i+1=${i + sizeOf}`)
 
     let obj2 = {...obj, id: i + sizeOf}
     arr.push(obj, obj2);
@@ -72,12 +72,20 @@ function Avatars({nbrPairs}) {
     if (name.name === activeName.name) {
       setActiveName(null)
       setNames(prevNames => {
-        return prevNames.map(prevName => prevName.id === name.id || prevName.id === activeName.id ? {...prevName, show: true, active: false}: prevName)
+        return prevNames.map(prevName => prevName.id === name.id || prevName.id === activeName.id ? {
+          ...prevName,
+          show: true,
+          active: false
+        } : prevName)
       })
     } else {
       setActiveName(null)
       setNames(prevNames => {
-        return prevNames.map(prevName => prevName.id === name.id || prevName.id === activeName.id ? {...prevName, show: false, active: true}: prevName)
+        return prevNames.map(prevName => prevName.id === name.id || prevName.id === activeName.id ? {
+          ...prevName,
+          show: false,
+          active: true
+        } : prevName)
       })
     }
   }
@@ -98,8 +106,9 @@ function Avatars({nbrPairs}) {
 }
 
 function Game() {
-  const [nbrPairs, setNbrPairs] = React.useState(1)
+  const [nbrPairs, setNbrPairs] = React.useState("")
   const [start, setStart] = React.useState(false)
+
   function handleSubmit(e) {
     e.preventDefault()
     if (nbrPairs <= 0 || nbrPairs > 100) {
@@ -112,15 +121,20 @@ function Game() {
   }
 
   function handleChange(e) {
-    setNbrPairs(+e.target.value)
+    if (e.target.value === "") {
+      setNbrPairs("")
+    }
+    let numericValue = +e.target.value
+    if (numericValue) {
+      setNbrPairs(numericValue)
+    }
   }
 
   const form = (
     <form onSubmit={handleSubmit}>
-      <label htmlFor="tiles">Number of tile pairs</label><br/>
       <input id="tiles" value={nbrPairs} onChange={handleChange} type="text"
              placeholder="number of tile pairs..."/><br/>
-      <button>submit</button>
+      <button id="submit">submit</button>
     </form>
   )
   return (
