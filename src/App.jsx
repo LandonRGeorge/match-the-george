@@ -22,6 +22,7 @@ function pickRandomNames(sizeOf) {
       active: true,
       show: false,
     }
+    console.log(`i=${i}, i+1=${i+sizeOf}`)
 
     let obj2 = {...obj, id: i + sizeOf}
     arr.push(obj, obj2);
@@ -50,6 +51,11 @@ function Avatars({nbrPairs}) {
   const [activeName, setActiveName] = React.useState(null)
 
   function handleClick(e) {
+    console.log('click')
+    if (!e.target.dataset?.id) {
+      return
+    }
+    console.log(e.target.dataset.id)
     const name = names.find(name => name.id === +e.target.dataset.id)
     if (!name.active || name.show) {
       console.log('no longer active')
@@ -106,7 +112,7 @@ function Game() {
   }
 
   function handleChange(e) {
-    setNbrPairs(e.target.value)
+    setNbrPairs(+e.target.value)
   }
 
   const form = (
