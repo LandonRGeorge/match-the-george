@@ -7,6 +7,12 @@ let names = [
   'eleanor',
   'landon',
   'eli',
+  'barbara',
+  'chris',
+  'kevin',
+  'glen',
+  'jenna',
+  'joy'
 ]
 
 function pickRandomName() {
